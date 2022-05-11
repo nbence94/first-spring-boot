@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://ww.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Regisztráció</title>
-    <link rel="shortcut icon" type="image/x-icon" href="src/ikon.png" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
 </head>
 <body>
-    <form >
-        <input type="text" placeholder="Felhasználónév"/><br>
-        <input type="email" placeholder="E-mail cím"/><br>
-        <input type="password" placeholder="Jelszó"/><br><br>
+    <div>
+        <form method="post" action="/register" th:object="${modell_minta}">
+            <input type="text" name="nev" placeholder="Felhasználónév"/><br>
+            <input type="email" name="email" placeholder="E-mail cím"/><br>
+            <input type="password" name="jelszo" placeholder="Jelszó"/><br><br>
 
-        <input type="submit" value="Regisztrál"/>
-    </form>
-
-
-
-    <a href="/">Vissza</a>
+            <button type="submit">Regisztrál</button><br>
+            <a href="/">Vissza</a>
+        </form>
+    </div>
 </body>
 </html>

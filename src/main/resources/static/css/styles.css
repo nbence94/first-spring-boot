@@ -1,9 +1,5 @@
-body {
-    text-align: center;
-    background-color: #e0f6ff;
-}
-
 form {
+    text-align: center;
     background-color: #FFF;
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
     width: 20vw;
