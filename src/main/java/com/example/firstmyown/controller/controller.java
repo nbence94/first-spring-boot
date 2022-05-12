@@ -34,11 +34,11 @@ public class controller {
     }
 
     @GetMapping("/register")
-    public String registerSite(Model model) {
+    public String registerSite(/*Model model*/) {
         time = sdf.format(new Date());
         System.out.println(time + "  SIKER Register oldal betöltés");
 
-        model.addAttribute("modell_minta", new Users());
+        //model.addAttribute("modell_minta", new Users());
         return "register_site";
     }
 
@@ -56,7 +56,21 @@ public class controller {
         }
     }
 
+    @PostMapping("/main")
+    public String login(@ModelAttribute Users user_modell, Model model) {
+        time = sdf.format(new Date());
 
+        Users belepett = serv.selectUser(user_modell.getNev(), user_modell.getJelszo());
+        if (belepett != null) {
+            model.addAttribute("atadott_nev", belepett.getNev());
+
+            System.out.println(time + " SIKERES bejelentkezés");
+            return "main_screen";
+        } else {
+            System.out.println(time + " SIKERERTELEN bejelentkezés");
+            return "error_page";
+        }
+    }
 }
 
 

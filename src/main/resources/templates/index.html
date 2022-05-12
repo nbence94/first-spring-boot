@@ -5,13 +5,12 @@
     <title>Bejelentkezés</title>
     <link rel="shortcut icon" type="image/x-icon" href="src/ikon.png" />
     <link href="css/styles.css" rel="stylesheet">
-
 </head>
 <body>
     <div>
-        <form action="/main">
-            <input type="text" placeholder="Felhasználónév"/><br>
-            <input type="password" placeholder="Jelszó"><br><br>
+        <form action="/main" method="post">
+            <input type="text" name="nev" placeholder="Felhasználónév"/><br>
+            <input type="password" name="jelszo" placeholder="Jelszó"><br><br>
 
             <button type="submit">Belépés</button><br>
             <a href="/register">Regisztráció</a>
