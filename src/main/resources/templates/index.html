@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:th="http://ww.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Bejelentkezés</title>
@@ -8,11 +8,11 @@
 </head>
 <body>
     <div>
-        <form action="/main" method="post">
-            <input type="text" name="nev" placeholder="Felhasználónév"/><br>
-            <input type="password" name="jelszo" placeholder="Jelszó"><br><br>
+        <form action="/main" method="post" th:object="${loginRequest}">
+            <input type="text" name="nev" placeholder="Felhasználónév" required><br>
+            <input type="password" name="jelszo" placeholder="Jelszó" title="Írd be a jelszavad" required><br><br>
 
-            <button type="submit">Belépés</button><br>
+            <button type="submit" name="login">Belépés</button><br>
             <a href="/register">Regisztráció</a>
         </form>
     </div>

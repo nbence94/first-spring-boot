@@ -1,34 +1,25 @@
 package com.example.firstmyown.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+
     private String nev;
     private String jelszo;
     private String email;
 
-    public Users() {
-
-    }
-
-    public Users(int id, String nev, String jelszo, String email) {
-        this.id = id;
-        this.nev = nev;
-        this.jelszo = jelszo;
-        this.email = email;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -54,5 +45,15 @@ public class Users {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", nev='" + nev + '\'' +
+                ", jelszo='" + jelszo + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

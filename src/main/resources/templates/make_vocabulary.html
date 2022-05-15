@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://ww.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Új rögzítése</title>
+    <link rel="stylesheet" href="css/making_styles.css" type="text/css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
+</head>
+<body>
+    <section class="fej">
+        <div class="profil">
+            <h3>Szia <span th:text="${atadott_nev}"></span></h3>
+            <a href="/main">Vissza</a>
+        </div>
+        <div class="cim">
+            <h2 id="focim">Ez itt egy Angol-gyakorló alkalmazás tutorial</h2>
+        </div>
+    </section>
+
+    <section class="tartalom">
+        <div class="felvitel">
+            <form method="post" action="/new">
+                <table>
+                    <tr><td><label>Angol jelentés</label></td>
+                        <td><input type="text" name="angol" maxlength="20"></td></tr>
+                    <tr><td><label>Magyar jelentés</label></td>
+                        <td><input type="text" name="magyar" maxlength="20"></td></tr>
+
+                    <tr colspan="2">
+                        <td><button type="submit">Hozzáadás</button><br></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div class="szavak">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Sorszám</th>
+                    <th>Angol jelentés</th>
+                    <th>Magyar jelentés</th>
+                    <th colspan="2">Műveletek</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr  th:each="words : ${szavak_lista_atadva}">
+                        <td th:text="${words.id}">ID</td>
+                        <td th:text="${words.angol}">Megnevezés</td>
+                        <td th:text="${words.magyar}">Szava</td>
+                        <td> Szerkeszt </td>
+                        <td> Törlés </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="mentes">
+        <form method="post" action="/save">
+            <input type="text" placeholder="Adj nevet a szótárnak" name="megnevezes"/>
+            <button type="submit">Mentés</button>
+        </form>
+    </section>
+
+</body>
+</html>

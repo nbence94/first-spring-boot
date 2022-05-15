@@ -2,21 +2,22 @@ package com.example.firstmyown.service;
 
 import com.example.firstmyown.model.Users;
 import com.example.firstmyown.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyService {
+public class UserService {
 
+    @Autowired
     private final UserRepository repo;
 
-    public MyService(UserRepository repository) {
+    public UserService(UserRepository repository) {
         this.repo = repository;
     }
 
     public Users insertUser(String neve, String jelszava, String emailje) {
         if(!neve.equals("") && !jelszava.equals("")) {
             if(repo.findFirstByNev(neve).isPresent()) {
-                System.out.println("Belemegy");
                 return null;
             }
 
@@ -31,8 +32,10 @@ public class MyService {
         }
     }
 
-    public Users selectUser(String neve, String jelszava) {
-            return repo.findUserByNevAndJelszo(neve, jelszava).orElse(null);
+    public Users selectUser(String nev, String jelszo) {
+        return repo.findUserByNevAndJelszo(nev, jelszo).orElse(null);
     }
+
+
 
 }
