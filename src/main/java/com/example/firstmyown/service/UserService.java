@@ -5,6 +5,8 @@ import com.example.firstmyown.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -32,10 +34,8 @@ public class UserService {
         }
     }
 
-    public Users selectUser(String nev, String jelszo) {
-        return repo.findUserByNevAndJelszo(nev, jelszo).orElse(null);
+    public Users selectUser(String neve, String jelszava) {
+        return repo.findByNevAndJelszo(neve, jelszava).orElse(null);
     }
-
-
 
 }

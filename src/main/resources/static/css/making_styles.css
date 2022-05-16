@@ -1,4 +1,4 @@
-/* {
+* {
     padding: 0px;
     margin: 0px;
     text-decoration: none;
@@ -11,7 +11,7 @@ body {
         rgba(211, 248, 241, 0.7),
         rgba(255, 255, 255, 0.3)
     );
-    width: 100vw;
+
 }
 
 .fej {
@@ -45,12 +45,12 @@ body {
   transform: translate(-50%,-50%);
 }
 
-.tartalom {
+/*.tartalom {
     position: relative;
     top: 10%;
     left: 65%;
     transform: translate(-50%,-50%);
-}
+}*/
 
 .felvitel {
     width: 35%;
@@ -98,4 +98,3 @@ button:hover {
     margin-right: auto;
     float: right;
 }
-*/

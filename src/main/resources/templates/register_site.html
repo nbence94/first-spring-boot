@@ -9,9 +9,8 @@
     <div>
         <form method="post" action="/register" th:object="${registerRequest}">
             <input type="text" name="nev" placeholder="Felhasználónév"/><br>
-            <input type="email" name="email" placeholder="E-mail cím"/><br>
             <input type="password" name="jelszo" placeholder="Jelszó"/><br><br>
-
+            <input type="email" name="email" placeholder="E-mail cím"/><br>
             <button type="submit">Regisztrál</button><br>
             <a href="/">Vissza</a>
         </form>
