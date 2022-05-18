@@ -12,16 +12,6 @@ public class Words {
     private String angol;
     private String magyar;
 
-    public Words() {
-
-    }
-
-    public Words(int id, String angol, String magyar) {
-        this.id = id;
-        this.angol = angol;
-        this.magyar = magyar;
-    }
-
     public int getId() {
         return id;
     }
@@ -44,5 +34,14 @@ public class Words {
 
     public void setMagyar(String magyar) {
         this.magyar = magyar;
+    }
+
+    @Override
+    public String toString() {
+        return "Words{" +
+                "id=" + id +
+                ", angol='" + angol + '\'' +
+                ", magyar='" + magyar + '\'' +
+                '}';
     }
 }

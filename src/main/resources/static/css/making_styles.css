@@ -45,13 +45,6 @@ body {
   transform: translate(-50%,-50%);
 }
 
-/*.tartalom {
-    position: relative;
-    top: 10%;
-    left: 65%;
-    transform: translate(-50%,-50%);
-}*/
-
 .felvitel {
     width: 35%;
     font-size: 20px;
@@ -89,7 +82,8 @@ button:hover {
 }
 
 .szavak {
-    width: 60%;
+    width: 80%;
+    text-align: center;
 }
 
 .mentes {

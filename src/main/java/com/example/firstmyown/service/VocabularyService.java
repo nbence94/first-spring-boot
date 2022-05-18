@@ -10,15 +10,17 @@ import java.util.stream.Collectors;
 @Service
 public class VocabularyService {
 
-    private final VocabularyRepository voc_repo;
+    private final VocabularyRepository repo;
 
-    public VocabularyService(VocabularyRepository repo) {
-        this.voc_repo = repo;
+    public VocabularyService(VocabularyRepository vocabulary_repository) {
+        this.repo = vocabulary_repository;
     }
 
 
     public List<Vocabularies> megjelenites(int id) {
-        return voc_repo.findAll().stream().filter(szotar -> szotar.getUserid() == id).collect(Collectors.toList());
+        return repo.findAll().stream()
+                .filter(szotar -> szotar.getFelhasznaloid() == id)
+                .collect(Collectors.toList());
     }
 
     public Vocabularies insertSzotar(String megnevezes, int userid, int szavak_szama) {
@@ -27,16 +29,26 @@ public class VocabularyService {
         Vocabularies uj = new Vocabularies();
 
         uj.setMegnevezes(megnevezes);
-        uj.setUserid(userid);
+        uj.setFelhasznaloid(userid);
         uj.setJatszva(0);
         uj.setSzavak(szavak_szama);
 
-        return voc_repo.save(uj);
+        return repo.save(uj);
     }
 
     public int lastVocabularyId(int userid) {
-        //voc_repo.findAll().stream().filter(szo -> szo.getId() == userid).collect(Collectors.toList()).get(0).getUserid();
-        return voc_repo.findAll().stream().filter(szo -> szo.getId() == userid).collect(Collectors.toList()).get(0).getUserid();
+        List<Vocabularies> tmp_list = repo.findAll()
+                .stream()
+                .filter(szo -> szo.getFelhasznaloid() == userid)
+                .collect(Collectors.toList());
+
+
+
+        return repo.findAll()
+                .stream()
+                .filter(szo -> szo.getFelhasznaloid() == userid)
+                .collect(Collectors.toList())
+                .get(tmp_list.size()-1).getId();
     }
 
 }

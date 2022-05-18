@@ -30,11 +30,11 @@ public class TheController {
     List<Words> word_list;
 
     private final UserService user_service;
-    private final VocabularyService voc_serv;
+    private final VocabularyService vocabulary_service;
     private final WordService word_service;
     public TheController(UserService service, VocabularyService vocabulary_service, WordService wservice) {
         this.user_service = service;
-        this.voc_serv = vocabulary_service;
+        this.vocabulary_service = vocabulary_service;
         this.word_service = wservice;
     }
 
@@ -79,7 +79,7 @@ public class TheController {
             model.addAttribute("atadott_nev", login_name);
 
 
-            user_vocabulary_list = voc_serv.megjelenites(actual_user_id);
+            user_vocabulary_list = vocabulary_service.megjelenites(actual_user_id);
             model.addAttribute("given_list", user_vocabulary_list);
 
             System.out.println(time + " SIKERES bejelentkezés");
@@ -112,7 +112,7 @@ public class TheController {
     public String insertAWord(@ModelAttribute Words word_modell, Model model) {
         time = sdf.format(new Date());
 
-        word_list = word_service.fillIn(word_modell.getAngol(), word_modell.getMagyar());
+        word_list = word_service.putWordsInTmpList(word_modell.getAngol(), word_modell.getMagyar());
         model.addAttribute("atadott_nev", login_name);
 
         if(word_list != null) {
@@ -125,20 +125,23 @@ public class TheController {
     }
 
     @PostMapping("/save")
-    public String saveVocabulary(@ModelAttribute Words word_modell, @ModelAttribute Vocabularies szotar, Model model) {
+    public String saveVocabulary(@ModelAttribute Vocabularies szotar, Model model) {
         time = sdf.format(new Date());
 
-        //Adatok megjelenítése
-        model.addAttribute("atadott_nev", login_name);
-        model.addAttribute("given_list", user_vocabulary_list);
-
         //1 Szótár feltöltése - Még szavak nélkül
-        Vocabularies uj_szotar = voc_serv.insertSzotar(szotar.getMegnevezes(), actual_user_id, 0);
+        Vocabularies uj_szotar = vocabulary_service.insertSzotar(szotar.getMegnevezes(), actual_user_id, word_list.size());
         if(uj_szotar == null) return "error_page";
+
         //2 Szavak feltöltése - Ezzel együtt a kapcsolatok is
         if(!word_service.saveWords(actual_user_id)) return "error_page";
 
-        //TODO A szavak számát is bele kell majd tenni!!
+        word_list.clear();
+
+        //Adatok megjelenítése
+        model.addAttribute("atadott_nev", login_name);
+        user_vocabulary_list = vocabulary_service.megjelenites(actual_user_id);
+        model.addAttribute("given_list", user_vocabulary_list);
+
         return "main_screen";
     }
 

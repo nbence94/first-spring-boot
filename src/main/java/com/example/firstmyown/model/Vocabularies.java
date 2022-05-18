@@ -12,18 +12,7 @@ public class Vocabularies {
     private String megnevezes;
     private int szavak;
     private int jatszva;
-    private int userid;
-
-    public Vocabularies() {
-    }
-
-    public Vocabularies(int id, String megnevezes, int szavak, int jatszva, int felhasznalo) {
-        this.id = id;
-        this.megnevezes = megnevezes;
-        this.szavak = szavak;
-        this.jatszva = jatszva;
-        this.userid = felhasznalo;
-    }
+    private int felhasznaloid;
 
     public int getId() {
         return id;
@@ -57,11 +46,11 @@ public class Vocabularies {
         this.jatszva = jatszva;
     }
 
-    public int getUserid() {
-        return userid;
+    public int getFelhasznaloid() {
+        return felhasznaloid;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setFelhasznaloid(int felhasznaloid) {
+        this.felhasznaloid = felhasznaloid;
     }
 }
