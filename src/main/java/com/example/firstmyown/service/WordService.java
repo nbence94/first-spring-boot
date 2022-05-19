@@ -13,38 +13,21 @@ import java.util.stream.Collectors;
 @Service
 public class WordService {
 
-    @Autowired
+    List<Words> tmp_list; //Átmeneti lista, ami a szavakat tárolja
+    int tmp_id = 1; //Átmeneti id számláló
+
     private final WordRepository word_repository;
-
-    private final ConnectionService conn_service;
     private final VocabularyService vocabulary_service;
-
-    List<Words> tmp_list;
-    int tmp_id = 1;
-
-    public WordService(WordRepository repository, ConnectionService connection_service, VocabularyService vocabularyService) {
+    private final ConnectionService conn_service;
+    public WordService(WordRepository repository,
+                       VocabularyService vocabulary_service,
+                       ConnectionService connection_service) {
         this.word_repository = repository;
-        this.conn_service = connection_service;
-        this.vocabulary_service = vocabularyService;
         tmp_list = new ArrayList<>();
+        this.vocabulary_service = vocabulary_service;
+        this.conn_service = connection_service;
     }
 
-    public boolean saveWords(int userid) {
-
-        for (Words words : tmp_list) {
-            Words uj_szo = new Words();
-            uj_szo.setAngol(words.getAngol());
-            uj_szo.setMagyar(words.getMagyar());
-            word_repository.save(uj_szo);
-
-            conn_service.insertKapcsolat(vocabulary_service.lastVocabularyId(userid), getLastWordId(words.getAngol()));
-        }
-
-        tmp_id = 1;
-        return true;
-    }
-
-    //Csak simán listába tenni és megjeleníteni. Ezeknek az elemei kellenek majd a
     public List<Words> putWordsInTmpList(String angol, String magyar) {
         if(!angol.equals("") && !magyar.equals("")) {
             Words uj = new Words();
@@ -60,6 +43,25 @@ public class WordService {
         }
     }
 
+    public boolean saveWords(int userid) {
+
+        for (Words words : tmp_list) {
+            //A listában lévő, aktuális szó feltöltése
+            Words uj_szo = new Words();
+            uj_szo.setAngol(words.getAngol());
+            uj_szo.setMagyar(words.getMagyar());
+            word_repository.save(uj_szo);
+
+            //A szóval együtt a kapcsolat is feltöltésre kerül a Connection-be
+            conn_service.insertKapcsolat(
+                    vocabulary_service.lastVocabularyId(userid),
+                    getLastWordId(words.getAngol()));
+        }
+
+        tmp_id = 1;
+        return true;
+    }
+
     public int getLastWordId(String angol) {
         List<Words> tmp_list = word_repository.findAll()
                 .stream()
@@ -73,4 +75,18 @@ public class WordService {
                 .get(tmp_list.size() - 1).getId();
     }
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

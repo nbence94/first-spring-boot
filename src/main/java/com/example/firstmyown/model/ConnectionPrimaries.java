@@ -3,7 +3,6 @@ package com.example.firstmyown.model;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-
 @Embeddable
 public class ConnectionPrimaries implements Serializable {
 
@@ -11,7 +10,6 @@ public class ConnectionPrimaries implements Serializable {
 
     private int vocabularyid;
     private int wordid;
-
 
     public ConnectionPrimaries() {
 

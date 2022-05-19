@@ -8,9 +8,7 @@ import com.example.firstmyown.service.VocabularyService;
 import com.example.firstmyown.service.WordService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,7 +66,7 @@ public class TheController {
         }
     }
 
-    @PostMapping("/main")
+    @RequestMapping(value="/main", params="belepes",method=RequestMethod.POST)
     public String login(@ModelAttribute Users user_modell, Model model) {
         time = sdf.format(new Date());
 
@@ -107,43 +105,38 @@ public class TheController {
         return "main_screen";
     }
 
-    //Ez még csak annyi, hogy listába teszi
     @PostMapping("/new")
-    public String insertAWord(@ModelAttribute Words word_modell, Model model) {
+    public String putWordInList(@ModelAttribute Words word, Model model) {
         time = sdf.format(new Date());
-
-        word_list = word_service.putWordsInTmpList(word_modell.getAngol(), word_modell.getMagyar());
         model.addAttribute("atadott_nev", login_name);
 
+        word_list = word_service.putWordsInTmpList(word.getAngol(), word.getMagyar());
         if(word_list != null) {
             model.addAttribute("szavak_lista_atadva", word_list);
+            System.out.println(time + "  Új szó feltöltése sikeres!");
             return "make_vocabulary";
         } else {
-            System.out.println(time + "  Új szó feltöltése sikertelen!");
+            System.out.println(time + "  Új szó feltöltése SIKERTELEN!");
             return "error_page";
         }
     }
 
-    @PostMapping("/save")
+    @RequestMapping(value="/main", params="szotar",method=RequestMethod.POST)
     public String saveVocabulary(@ModelAttribute Vocabularies szotar, Model model) {
         time = sdf.format(new Date());
 
-        //1 Szótár feltöltése - Még szavak nélkül
-        Vocabularies uj_szotar = vocabulary_service.insertSzotar(szotar.getMegnevezes(), actual_user_id, word_list.size());
-        if(uj_szotar == null) return "error_page";
+        Vocabularies uj_szotar = vocabulary_service.insertSzotar(szotar.getMegnevezes(), word_list.size(), actual_user_id);
+        if (uj_szotar == null) return "error_page";
 
-        //2 Szavak feltöltése - Ezzel együtt a kapcsolatok is
-        if(!word_service.saveWords(actual_user_id)) return "error_page";
+        if (!word_service.saveWords(actual_user_id)) return "error_page";
 
-        word_list.clear();
-
-        //Adatok megjelenítése
         model.addAttribute("atadott_nev", login_name);
         user_vocabulary_list = vocabulary_service.megjelenites(actual_user_id);
         model.addAttribute("given_list", user_vocabulary_list);
 
         return "main_screen";
     }
+
 
 }
 

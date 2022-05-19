@@ -23,19 +23,19 @@ public class VocabularyService {
                 .collect(Collectors.toList());
     }
 
-    public Vocabularies insertSzotar(String megnevezes, int userid, int szavak_szama) {
+    public Vocabularies insertSzotar(String megnevezes, int szavak_szama, int userid) {
         if(megnevezes.equals("")) return null;
 
         Vocabularies uj = new Vocabularies();
-
         uj.setMegnevezes(megnevezes);
-        uj.setFelhasznaloid(userid);
-        uj.setJatszva(0);
         uj.setSzavak(szavak_szama);
+        uj.setJatszva(0);
+        uj.setFelhasznaloid(userid);
 
         return repo.save(uj);
     }
 
+    //Ez kell majd pptbe
     public int lastVocabularyId(int userid) {
         List<Vocabularies> tmp_list = repo.findAll()
                 .stream()
@@ -52,3 +52,18 @@ public class VocabularyService {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
