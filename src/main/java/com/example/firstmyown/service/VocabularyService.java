@@ -4,6 +4,7 @@ import com.example.firstmyown.model.Vocabularies;
 import com.example.firstmyown.repository.VocabularyRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,6 @@ public class VocabularyService {
         return repo.save(uj);
     }
 
-    //Ez kell majd pptbe
     public int lastVocabularyId(int userid) {
         List<Vocabularies> tmp_list = repo.findAll()
                 .stream()
@@ -49,6 +49,11 @@ public class VocabularyService {
                 .filter(szo -> szo.getFelhasznaloid() == userid)
                 .collect(Collectors.toList())
                 .get(tmp_list.size()-1).getId();
+    }
+
+    @Transactional
+    public void delete(int id) {
+        repo.deleteById(id);
     }
 
 }

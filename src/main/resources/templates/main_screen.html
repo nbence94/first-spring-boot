@@ -47,8 +47,8 @@
                             <td th:text="${vocabulary.megnevezes}">Megnevezés</td>
                             <td th:text="${vocabulary.szavak}">Szava</td>
                             <td th:text="${vocabulary.jatszva}">Játszva</td>
-                            <td> Szerkeszt </td>
-                            <td> Törlés </td>
+                            <td> <a th:href="@{'/edit/' + ${vocabulary.id}}">Szerkesztés</a> </td>
+                            <td> <a th:href="@{'/delete/' + ${vocabulary.id}}">Törlés</a> </td>
                         </tr>
                         </tbody>
                     </table>

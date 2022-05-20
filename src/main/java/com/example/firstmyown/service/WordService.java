@@ -5,6 +5,7 @@ import com.example.firstmyown.repository.WordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -75,6 +76,10 @@ public class WordService {
                 .get(tmp_list.size() - 1).getId();
     }
 
+    @Transactional
+    public void deleteWord(int wordid) {
+        word_repository.deleteById(wordid);
+    }
 
 }
 

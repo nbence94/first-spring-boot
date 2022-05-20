@@ -1,16 +1,21 @@
 package com.example.firstmyown.controller;
 
+import com.example.firstmyown.model.Connections;
 import com.example.firstmyown.model.Users;
 import com.example.firstmyown.model.Vocabularies;
 import com.example.firstmyown.model.Words;
+import com.example.firstmyown.repository.ConnectionRepository;
+import com.example.firstmyown.service.ConnectionService;
 import com.example.firstmyown.service.UserService;
 import com.example.firstmyown.service.VocabularyService;
 import com.example.firstmyown.service.WordService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -30,10 +35,12 @@ public class TheController {
     private final UserService user_service;
     private final VocabularyService vocabulary_service;
     private final WordService word_service;
-    public TheController(UserService service, VocabularyService vocabulary_service, WordService wservice) {
+    private final ConnectionService connection_service;
+    public TheController(UserService service, VocabularyService vocabulary_service, WordService wservice, ConnectionService connection_service) {
         this.user_service = service;
         this.vocabulary_service = vocabulary_service;
         this.word_service = wservice;
+        this.connection_service = connection_service;
     }
 
     @GetMapping("/")
@@ -97,6 +104,7 @@ public class TheController {
     }
 
     @GetMapping("/main")
+    //@RequestMapping(value="/main", params="vissza", method=RequestMethod.GET)
     public String mainScreen(Model model){
         time = sdf.format(new Date());
         model.addAttribute("atadott_nev", login_name);
@@ -121,7 +129,7 @@ public class TheController {
         }
     }
 
-    @RequestMapping(value="/main", params="szotar",method=RequestMethod.POST)
+    @RequestMapping(value="/main", params="szotar", method=RequestMethod.POST)
     public String saveVocabulary(@ModelAttribute Vocabularies szotar, Model model) {
         time = sdf.format(new Date());
 
@@ -137,6 +145,23 @@ public class TheController {
         return "main_screen";
     }
 
+    @RequestMapping("/delete/{id}")
+    public String deleteVocabulary(@PathVariable(name = "id") int id) {
+        time = sdf.format(new Date());
+
+        List<Connections> conns = connection_service.getConnections(id);
+        for (Connections connections : conns) {
+            int wordid = connections.getId().getWordid();
+            connection_service.deleteByWord(wordid);
+            word_service.deleteWord(wordid);
+        }
+        vocabulary_service.delete(id);
+
+        System.out.println(time + " A szótár (azonosító: " + id + ") törölve");
+        user_vocabulary_list = vocabulary_service.megjelenites(actual_user_id);
+
+        return "redirect:/main";
+    }
 
 }
 

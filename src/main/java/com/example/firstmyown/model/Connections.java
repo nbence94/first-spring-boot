@@ -27,4 +27,10 @@ public class Connections {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Connections{" +
+                "id=" + id +
+                '}';
+    }
 }

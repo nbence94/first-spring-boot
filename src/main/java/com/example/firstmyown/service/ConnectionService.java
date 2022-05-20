@@ -5,6 +5,9 @@ import com.example.firstmyown.model.Connections;
 import com.example.firstmyown.repository.ConnectionRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Service
 public class ConnectionService {
 
@@ -22,6 +25,16 @@ public class ConnectionService {
             return conn_repo.save(conn);
         } else return null;
     }
+
+    @Transactional
+    public void deleteByWord(int wordid) {
+        conn_repo.deleteByIdWordid(wordid);
+    }
+
+    public List<Connections> getConnections(int vocabulary_id) {
+        return conn_repo.findByIdVocabularyid(vocabulary_id);
+    }
+
 
 }
 

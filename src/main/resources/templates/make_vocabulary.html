@@ -10,7 +10,7 @@
     <section class="fej">
         <div class="profil">
             <h3>Szia <span th:text="${atadott_nev}"></span></h3>
-            <a href="/main">Vissza</a>
+            <a href="/main" >Vissza</a>
         </div>
         <div class="cim">
             <h2 id="focim">Ez itt egy Angol-gyakorló alkalmazás tutorial</h2>
@@ -46,8 +46,8 @@
                 <tbody>
                     <tr  th:each="words : ${szavak_lista_atadva}">
                         <td th:text="${words.id}">ID</td>
-                        <td th:text="${words.angol}">Megnevezés</td>
-                        <td th:text="${words.magyar}">Szava</td>
+                        <td th:text="${words.angol}">Angol</td>
+                        <td th:text="${words.magyar}">Magyar</td>
                         <td> Szerkeszt </td>
                         <td> Törlés </td>
                     </tr>
@@ -58,7 +58,7 @@
 
     <section class="mentes">
         <form method="post" action="/main">
-            <input type="text" placeholder="Adj nevet a szótárnak" name="megnevezes"/>
+            <input type="text" name="megnevezes" placeholder="Adj nevet a szótárnak" />
             <button type="submit" name="szotar">Mentés</button>
         </form>
     </section>
