@@ -2,6 +2,7 @@ package com.example.firstmyown.service;
 
 import com.example.firstmyown.model.Vocabularies;
 import com.example.firstmyown.repository.VocabularyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -54,6 +55,10 @@ public class VocabularyService {
     @Transactional
     public void delete(int id) {
         repo.deleteById(id);
+    }
+
+    public Vocabularies selectVocabularyById(int id) {
+        return repo.findById(id);
     }
 
 }

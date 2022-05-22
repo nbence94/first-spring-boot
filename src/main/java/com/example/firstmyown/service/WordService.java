@@ -18,7 +18,9 @@ public class WordService {
     int tmp_id = 1; //Átmeneti id számláló
 
     private final WordRepository word_repository;
+
     private final VocabularyService vocabulary_service;
+
     private final ConnectionService conn_service;
     public WordService(WordRepository repository,
                        VocabularyService vocabulary_service,
@@ -44,19 +46,21 @@ public class WordService {
         }
     }
 
-    public boolean saveWords(int userid) {
-
-        for (Words words : tmp_list) {
+    public boolean saveWords(int userid, List<Words> list) {
+        //TODO Itt átírtam a tmp_list-et listre, és nem volt paraméter (lista paraméter)
+        for (Words words : list) {
             //A listában lévő, aktuális szó feltöltése
             Words uj_szo = new Words();
             uj_szo.setAngol(words.getAngol());
             uj_szo.setMagyar(words.getMagyar());
             word_repository.save(uj_szo);
+            System.out.println("DEBUG: " + uj_szo);
 
             //A szóval együtt a kapcsolat is feltöltésre kerül a Connection-be
             conn_service.insertKapcsolat(
                     vocabulary_service.lastVocabularyId(userid),
                     getLastWordId(words.getAngol()));
+
         }
 
         tmp_id = 1;
@@ -80,6 +84,12 @@ public class WordService {
     public void deleteWord(int wordid) {
         word_repository.deleteById(wordid);
     }
+
+
+    public Words selectWordById(int id) {
+        return word_repository.findById(id);
+    }
+
 
 }
 

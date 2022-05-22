@@ -8,4 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface VocabularyRepository extends JpaRepository<Vocabularies, Integer> {
+    Vocabularies findById(int id);
 }

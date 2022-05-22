@@ -21,7 +21,7 @@ public class ConnectionService {
         if(szoid != -1 && szotarid != -1) {
             Connections conn = new Connections();
             conn.setId(new ConnectionPrimaries(szotarid, szoid));
-
+            System.out.println("DEBUG: " + conn);
             return conn_repo.save(conn);
         } else return null;
     }

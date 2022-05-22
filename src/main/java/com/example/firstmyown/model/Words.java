@@ -36,4 +36,12 @@ public class Words {
         this.magyar = magyar;
     }
 
+    @Override
+    public String toString() {
+        return "Words{" +
+                "id=" + id +
+                ", angol='" + angol + '\'' +
+                ", magyar='" + magyar + '\'' +
+                '}';
+    }
 }

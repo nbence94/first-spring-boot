@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Új rögzítése</title>
-    <link rel="stylesheet" href="css/making_styles.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/making_styles.css" type="text/css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
 </head>
 <body>
@@ -25,7 +25,6 @@
                         <td><input type="text" name="angol" maxlength="20"></td></tr>
                     <tr><td><label>Magyar jelentés</label></td>
                         <td><input type="text" name="magyar" maxlength="20"></td></tr>
-
                     <tr>
                         <td><button type="submit">Hozzáadás</button><br></td>
                     </tr>
@@ -57,8 +56,9 @@
     </section>
 
     <section class="mentes">
-        <form method="post" action="/main">
-            <input type="text" name="megnevezes" placeholder="Adj nevet a szótárnak" />
+        <form method="post"  action="#" th:action="@{/main}" th:object="${szotar}">
+            <input type="hidden" th:field="*{id}" />
+            <input type="text" th:field="*{megnevezes}" placeholder="Adj nevet a szótárnak"/>
             <button type="submit" name="szotar">Mentés</button>
         </form>
     </section>
